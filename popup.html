@@ -27,6 +27,9 @@
  function showmodal(){
   window.showModalDialog('modal.html','width=100,height=150,toolbar=0,menubar=0,location=0,status=1,scrollbars=0,resizable=0,left=0,top=0')
  }
+ function showmodal2(){
+  window.showModalDialog('modal2.html','width=100,height=150,toolbar=0,menubar=0,location=0,status=1,scrollbars=0,resizable=0,left=0,top=0')
+ }
  function clickhere() {
     window.open("https://www.bing.com", "popop 3")
     setTimeout("showmodal()",3000)
@@ -41,8 +44,8 @@
     setTimeout("window.focus()",5000)
  }
  function clickhere5() {
-   window.showModalDialog('modal2.html','width=100,height=150,toolbar=0,menubar=0,location=0,status=1,scrollbars=0,resizable=0,left=0,top=0')
- }
+   setTimeout("showmodal2()",6000);
+}
 //window.close();
 </script>
 </body>
