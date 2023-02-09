@@ -1,0 +1,18 @@
+<html>
+
+<head>
+  <script type="text/javascript">
+    function TestCreateFiles() {
+      var str = IEProtectModeTest.TestCreateFiles("");
+      document.getElementById("display").innerHTML = str;
+    }
+  </script>
+</head>
+
+<body>
+  <object id="IEProtectModeTest" classid="CLSID:a20a4cd9-98b3-4d4d-a304-721424c8e485"></object>
+  <button onclick="TestCreateFiles()">Test Files</button>
+  <div id="display"></div>
+</body>
+
+</html>
