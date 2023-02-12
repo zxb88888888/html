@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <script type="text/javascript">
+    function TestFile() {
+      var passed = IEProtectModeTest.TestCreateFiles("");//CreateReg("");//TestCreateFiles("");
+      if (passed == true) {
+        result.innerHTML = "Result:Passed"
+      } else {
+        result.innerHTML = "Result:Failed"
+      }
+      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+    }
+    function TestReg() {
+      var passed = IEProtectModeTest.TestCreateReg("");//CreateReg("");//TestCreateFiles("");
+      if (passed == true) {
+        result.innerHTML = "Result:Passed"
+      } else {
+        result.innerHTML = "Result:Failed"
+      }
+      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+    }
+    function TestWindow() {
+      var passed = IEProtectModeTest.TestWindow("");//CreateReg("");//TestCreateFiles("");
+      if (passed == true) {
+        result.innerHTML = "Result:Passed"
+      } else {
+        result.innerHTML = "Result:Failed"
+      }
+      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+    }
+    function TestHook() {
+      var passed = IEProtectModeTest.TestHook("");//CreateReg("");//TestCreateFiles("");
+      if (passed == true) {
+        result.innerHTML = "Result:Passed"
+      } else {
+        result.innerHTML = "Result:Failed"
+      }
+      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+    }
+  </script>
+</head>
+
+<body>
+  <object id="IEProtectModeTest" classid="CLSID:a20a4cd9-98b3-4d4d-a304-721424c8e485"></object>
+  <button onclick="TestFile()">File</button>
+  <p></p>
+  <button onclick="TestReg()">Regedit</button>
+  <p></p>
+  <button onclick="TestWindow()">Window</button>
+  <p></p>
+  <button onclick="TestHook()">Hook</button>
+  <p></p>
+  <p></p>
+  <div id="result"></div>
+  <div id="display"></div>
+
+  <p></p>
+  <button onclick="IEProtectModeTest.ClearData()">Clear Test Data</button>
+</body>
+
+</html>
