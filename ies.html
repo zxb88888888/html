@@ -147,10 +147,10 @@
     }
 
       function debugResult(result,log) {
+      debugLog(log);
       if (result)
         debugLog("Result: Passed", "color:blue");
       else {
-         debugLog(log);
          debugLog("Result: Failed", "color:red");
          //debugLog(log, "color:red");
       }
