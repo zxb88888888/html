@@ -245,6 +245,13 @@
         alert("Please use IEMode!")
         return;
       }
+      try {
+        andIETestControl.Log()
+      } catch (e) {
+           debugLog(e, "color:red");
+           debugLog("Please reinstall!", "color:red");
+           return;
+      }
       var manualScenarios = document.getElementById("manualScenarios");
       for (var testScenario in testScenarios) {
         var option = document.createElement("option");
