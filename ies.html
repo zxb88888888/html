@@ -1,62 +1,293 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-  <script type="text/javascript">
-    function TestFile() {
-      var passed = IEProtectModeTest.TestCreateFiles("");//CreateReg("");//TestCreateFiles("");
-      if (passed == true) {
-        result.innerHTML = "Result:Passed"
-      } else {
-        result.innerHTML = "Result:Failed"
-      }
-      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <title>Test IE Process Proected Mode (Low integrity level)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Verdana, sans-serif
     }
-    function TestReg() {
-      var passed = IEProtectModeTest.TestCreateReg("");//CreateReg("");//TestCreateFiles("");
-      if (passed == true) {
-        result.innerHTML = "Result:Passed"
-      } else {
-        result.innerHTML = "Result:Failed"
-      }
-      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+
+    button {
+      margin: 4pt;
+      padding: 4pt;
     }
-    function TestWindow() {
-      var passed = IEProtectModeTest.TestWindow("");//CreateReg("");//TestCreateFiles("");
-      if (passed == true) {
-        result.innerHTML = "Result:Passed"
-      } else {
-        result.innerHTML = "Result:Failed"
-      }
-      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+
+    input {
+      margin: 4pt;
+      padding: 4pt;
     }
-    function TestHook() {
-      var passed = IEProtectModeTest.TestHook("");//CreateReg("");//TestCreateFiles("");
-      if (passed == true) {
-        result.innerHTML = "Result:Passed"
-      } else {
-        result.innerHTML = "Result:Failed"
-      }
-      document.getElementById("display").innerHTML = IEProtectModeTest.Log();
+
+    select {
+      margin: 4pt;
+      padding: 4pt;
     }
-  </script>
+
+    textArea {
+      display: block;
+      margin: 4pt;
+    }
+
+    #debugLog {
+      vertical-align: top;
+      width: 90%;
+      height: 300px;
+      overflow-y: scroll;
+      font-size: small;
+      border: 1px solid black;
+    }
+
+    #andIETestControl {
+      margin-top: 0px;
+      width: 500px;
+      height: 50px;
+    }
+
+    #result {
+      vertical-align: top;
+      width: 600px;
+      height: 16pt;
+      font-weight: bold;
+    }
+
+    #manualTest {
+      width: 300px;
+    }
+  </style>
 </head>
 
-<body>
-  <object id="IEProtectModeTest" classid="CLSID:a20a4cd9-98b3-4d4d-a304-721424c8e485"></object>
-  <button onclick="TestFile()">File</button>
-  <p></p>
-  <button onclick="TestReg()">Regedit</button>
-  <p></p>
-  <button onclick="TestWindow()">Window</button>
-  <p></p>
-  <button onclick="TestHook()">Hook</button>
-  <p></p>
-  <p></p>
-  <div id="result"></div>
-  <div id="display"></div>
+<body onload="onLoad();">
+  <object id="andIETestControl" classid="CLSID:a20a4cd9-98b3-4d4d-a304-721424c8e485"></object>
+  <div id="debugLog"></div>
+  <div id="runResult"></div>
 
-  <p></p>
-  <button onclick="IEProtectModeTest.ClearData()">Clear Test Data</button>
+  <script>
+    // Polyfills
+    if (!String.prototype.startsWith) {
+      String.prototype.startsWith = function (searchString, position) {
+        position = position || 0;
+        return this.substr(position, searchString.length) === searchString;
+      };
+    }
+  </script>
+
+  <script>
+    // List of scenarios and expected results within Edge. The goal is compatibility with IE,
+    // which generally means the same bugs as IE.
+    //
+    // The behavior of these tests can also change depending on whether the tab is running in
+    // protected mode. The AX control is also bound by the UIPI restrictions, so it can't walk up
+    // to IEFrame or Chrome_WidgetWin.
+    //
+    // testType options: TridentParent, FrameParent, RootParent, DesktopParent
+    // testThread options: UIThread, WorkerThread, AssociatedWorkerThread
+    var testScenarios = {
+       "File": {
+        "testFunction": testFile,
+        "testType": ["TridentParent"],
+        "testThread": ["UIThread"],
+        "expectedStatus": "shown",
+        "expectedModal": true,
+        "expectedOwnedByBrowser": true,
+      },
+      "Registry": {
+        "testFunction": testRegistry,
+        "testType": ["TridentParent"],
+        "testThread": ["UIThread"],
+        "expectedStatus": "shown",
+        "expectedModal": true,
+        "expectedOwnedByBrowser": true,
+      },
+      "Window": {
+        "testFunction": testWindow,
+        "testType": ["TridentParent"],
+        "testThread": ["UIThread"],
+        "expectedStatus": "shown",
+        "expectedModal": true,
+        "expectedOwnedByBrowser": true,
+      },
+       "Hook": {
+        "testFunction": testHook,
+        "testType": ["TridentParent"],
+        "testThread": ["UIThread"],
+        "expectedStatus": "shown",
+        "expectedModal": true,
+        "expectedOwnedByBrowser": true,
+      },
+
+    };
+
+    function testFile() {
+      debugLog("File test: Try to write to a location with a medium integrity level.");
+      var passed = andIETestControl.TestCreateFiles("");//CreateReg("");//TestCreateFiles("");
+      debugResult(passed, andIETestControl.Log());
+      return passed;
+    }
+
+    function testRegistry() {
+        debugLog("Registry test: Try to write to a location with a medium integrity level.");
+        var passed = andIETestControl.TestCreateReg("");//CreateReg("");//TestCreateFiles("");
+        debugResult(passed, andIETestControl.Log());
+        return passed;
+    }
+
+    function testWindow() {
+        debugLog("Window test: Try to change the active window zorder in a medium integrity level process.");
+        var passed = andIETestControl.TestWindow("");//CreateReg("");//TestCreateFiles("");
+        debugResult(passed, andIETestControl.Log());
+        return passed;
+    }
+
+    function testHook() {
+        debugLog("SetWindowsHook test: Try to insert dll to a process with a medium integrity level.");
+        var passed = andIETestControl.TestHook("");//CreateReg("");//TestCreateFiles("");
+        debugResult(passed, andIETestControl.Log());
+        return passed;
+    }
+
+      function debugResult(result,log) {
+      if (result)
+        debugLog("Result: Passed", "color:blue");
+      else {
+         debugLog(log);
+         debugLog("Result: Failed", "color:red");
+         //debugLog(log, "color:red");
+      }
+    }
+
+    function debugLog(text, style) {
+      console.log(text);
+      var debugLog = document.getElementById("debugLog");
+      debugLog.innerHTML += "<span style='" + style + "'>" + text + "</span></br>";
+      debugLog.scrollTop = debugLog.scrollHeight;
+    }
+
+    function debugLogFailure(result, text) {
+      debugLog("Failed: " + text + ", window=" + result.windowTitle, "color:red");
+    }
+
+    function evaluateResult(test, result) {
+      if (result == false)
+       return false;
+      return true;
+    }
+
+    function shouldSkipTestScenario(testScenario) {
+      return false;
+    }
+
+    function runTestScenario(testScenarioName, closeDialog) {
+      debugLog("Scenario: " + testScenarioName, "font-weight:bold");
+      var testScenario = testScenarios[testScenarioName];
+      var failures = 0;
+      if (!shouldSkipTestScenario(testScenario)) {
+        for (var i = 0; i < testScenario.testType.length; i++) {
+          for (var j = 0; j < testScenario.testThread.length; j++) {
+            var result = testScenario.testFunction(testScenario.testType[i], testScenario.testThread[j], closeDialog);
+            if (!result) {
+              failures++;
+            }
+          }
+        }
+      } else {
+        debugLog("Skipping for protected mode", "color:brown");
+      }
+
+      return failures;
+    }
+
+    function setRunResult(failureCount) {
+      var runResult = document.getElementById("runResult")
+      if (failureCount == -1) {
+        runResult.innerText = "";
+      } else {
+        runResult.innerText = (failureCount == 0) ? "Pass" : "Failures: " + failureCount;
+      }
+    }
+
+    function clearDebugLog() {
+      document.getElementById("debugLog").innerHTML = "";
+      andIETestControl.clearData();
+    }
+
+    function runAllTests() {
+      setRunResult(-1);
+      var failures = 0;
+      try {
+        for (var testScenario in testScenarios) {
+          failures += runTestScenario(testScenario, true);
+        }
+      } catch (e) {
+        debugLog(e, "color:darkred");
+        failures++;
+      }
+      setRunResult(failures);
+    }
+
+    function runManualTest() {
+      setRunResult(-1);
+      var closeDialogs = false;//document.getElementById("closeDialogs").checked;
+      var failures = runTestScenario(document.getElementById("manualScenarios").value, closeDialogs);
+      setRunResult(failures);
+    }
+
+    function onLoad() {
+
+      // Check the browser type
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE ");
+      if (msie < 0) {
+        msie = ua.indexOf("Trident/");
+      }
+      if (msie > 0) {
+      } else {
+        alert("Please use IEMode!")
+        return;
+      }
+      var manualScenarios = document.getElementById("manualScenarios");
+      for (var testScenario in testScenarios) {
+        var option = document.createElement("option");
+        option.innerText = testScenario;
+        option.value = testScenario;
+        manualScenarios.appendChild(option);
+      }
+
+      var browserState = document.getElementById("browserState");
+      browserState.innerHTML += "Browser: ";
+      browserState.innerHTML += andIETestControl.GetHostApp();
+      browserState.innerHTML += "<br>";
+      browserState.innerHTML += "Process Integrity Level: ";
+      browserState.innerHTML += andIETestControl.ProcessIntegrityLevel() ;
+    }
+
+    function onDomContentLoaded() {
+      var args = location.search.substr(1).split("&")
+        .map(function (p) { return p.split("=").map(decodeURIComponent); })
+        .reduce(function (a, e) {
+          a[e[0]] = e[1];
+          return a;
+        }, {});
+
+      if (!args["testScenario"]) {
+        return;
+      }
+
+      if (args["testScenario"] == "all") {
+        runAllTests();
+      } else {
+        setRunResult(runTestScenario(args["testScenario"], true));
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", onDomContentLoaded);
+  </script>
+
+  <h3>Debugging</h3>
+  <button onclick="runAllTests();">Run all tests</button><button onclick="clearDebugLog();">Clear</button><br>
+  <button onclick="runManualTest();">Run scenario</button><select id="manualScenarios"></select>
+    <hr />
+    <div id="browserState"></div>
 </body>
 
 </html>
