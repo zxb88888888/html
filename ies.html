@@ -119,28 +119,28 @@
     };
 
     function testFile() {
-      debugLog("File test: Try to write to a medium integrity level location.");
+      debugLog("Test method: Try to write to a medium integrity level location.");
       var passed = andIETestControl.TestCreateFiles("");//CreateReg("");//TestCreateFiles("");
       debugResult(passed, andIETestControl.Log());
       return passed;
     }
 
     function testRegistry() {
-        debugLog("Registry test: Try to write to a medium integrity level location.");
+        debugLog("Test method: Try to write to a medium integrity level location.");
         var passed = andIETestControl.TestCreateReg("");//CreateReg("");//TestCreateFiles("");
         debugResult(passed, andIETestControl.Log());
         return passed;
     }
 
     function testWindow() {
-        debugLog("Window test: Try to change the active window(created by a medium integrity level process) zorder.");
+        debugLog("Test method: Try to change the active window(created by a medium integrity level process) zorder.");
         var passed = andIETestControl.TestWindow("");//CreateReg("");//TestCreateFiles("");
         debugResult(passed, andIETestControl.Log());
         return passed;
     }
 
     function testHook() {
-        debugLog("SetWindowsHook test: Try to inject a dll to a medium integrity level process.");
+        debugLog("Test method: Try to inject a dll to a medium integrity level process.");
         var passed = andIETestControl.TestHook("");//CreateReg("");//TestCreateFiles("");
         debugResult(passed, andIETestControl.Log());
         return passed;
@@ -178,7 +178,7 @@
     }
 
     function runTestScenario(testScenarioName, closeDialog) {
-      debugLog("Scenario: " + testScenarioName, "font-weight:bold");
+      debugLog("Test: " + testScenarioName, "font-weight:bold");
       var testScenario = testScenarios[testScenarioName];
       var failures = 0;
       if (!shouldSkipTestScenario(testScenario)) {
@@ -292,7 +292,7 @@
 
   <h3>Debugging</h3>
   <button onclick="runAllTests();">Run all tests</button><button onclick="clearDebugLog();">Clear</button><br>
-  <button onclick="runManualTest();">Run scenario</button><select id="manualScenarios"></select>
+  <button onclick="runManualTest();">Run test</button><select id="manualScenarios"></select>
     <hr />
     <div id="browserState"></div>
 </body>
