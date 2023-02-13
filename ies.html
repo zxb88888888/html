@@ -119,28 +119,28 @@
     };
 
     function testFile() {
-      debugLog("File test: Try to write to a location with a medium integrity level.");
+      debugLog("File test: Try to write to a medium integrity level location.");
       var passed = andIETestControl.TestCreateFiles("");//CreateReg("");//TestCreateFiles("");
       debugResult(passed, andIETestControl.Log());
       return passed;
     }
 
     function testRegistry() {
-        debugLog("Registry test: Try to write to a location with a medium integrity level.");
+        debugLog("Registry test: Try to write to a medium integrity level location.");
         var passed = andIETestControl.TestCreateReg("");//CreateReg("");//TestCreateFiles("");
         debugResult(passed, andIETestControl.Log());
         return passed;
     }
 
     function testWindow() {
-        debugLog("Window test: Try to change the active window zorder in a medium integrity level process.");
+        debugLog("Window test: Try to change the active window(created by a medium integrity level process) zorder.");
         var passed = andIETestControl.TestWindow("");//CreateReg("");//TestCreateFiles("");
         debugResult(passed, andIETestControl.Log());
         return passed;
     }
 
     function testHook() {
-        debugLog("SetWindowsHook test: Try to insert dll to a process with a medium integrity level.");
+        debugLog("SetWindowsHook test: Try to inject a dll to a medium integrity level process.");
         var passed = andIETestControl.TestHook("");//CreateReg("");//TestCreateFiles("");
         debugResult(passed, andIETestControl.Log());
         return passed;
