@@ -148,11 +148,11 @@
 
       function debugResult(result,log) {
       debugLog(log);
-      if (result)
-        debugLog("Attack test: Protection failed, the attack succeded", "color:blue");
-      else {
+      if (result){
         debugLog("Attack test: Protection succeeded, the attack failed.", "color:red");
-         //debugLog(log, "color:red");
+      }
+      else {
+        debugLog("Attack test: Protection failed, the attack succeded", "color:blue");
       }
     }
 
