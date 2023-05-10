@@ -22,6 +22,14 @@
   Last name: <input type="text" name="lname"><br>
   <input type="submit" value="commit">
 </form>
+<p></p>
+<p></p>
+<p></p>
+<button type="button" onclick="pop_location_no()">location_no</button>
+<p></p>	
+<button type="button" onclick="pop_location_yes()">location_yes</button>
+<p></p>
+<button type="button" onclick="pop_location_default()">location_default</button>	
 <script>
  checkblocked.style.display = "none"  
  function showmodal(){
@@ -60,12 +68,13 @@ function pop_location_yes(){
 function pop_location_default(){
     window.open("https://www.so.com", "location_default", location_yes);	
 }
+	//window.close();
+</script>
 	
 <button type="button" onclick="pop_location_no()">location_no</button>
 <button type="button" onclick="pop_location_yes()">location_yes</button>
 <button type="button" onclick="pop_location_default()">location_default</button>	
-//window.close();
-</script>
+
 </body>
 </html>
 
