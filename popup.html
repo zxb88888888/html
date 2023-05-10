@@ -46,6 +46,24 @@
  function clickhere5() {
    setTimeout("showmodal2()",6000);
 }
+
+var location_no = "menubar=no,location=no,resizable=no,scrollbars=no,status=yes,width=600,height=500";
+var location_yes = "menubar=no,location=yes,resizable=no,scrollbars=no,status=yes,width=600,height=500";
+var location_default = "menubar=no,resizable=no,scrollbars=no,status=yes,width=600,height=500";
+	
+function pop_location_no(){
+    window.open("https://www.so.com", "location_no", location_no);	
+}
+function pop_location_yes(){
+    window.open("https://www.so.com", "location_yes", location_yes);	
+}
+function pop_location_default(){
+    window.open("https://www.so.com", "location_default", location_yes);	
+}
+	
+<button type="button" onclick="pop_location_no()">location_no</button>
+<button type="button" onclick="pop_location_yes()">location_yes</button>
+<button type="button" onclick="pop_location_default()">location_default</button>	
 //window.close();
 </script>
 </body>
