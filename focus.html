@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>OnFocus and onBlur</title>
+</head>
+<body>
+<script>
+ function openPopup() {
+     window.showModalDialog("https://www.google.com")
+ }
+ function myFunctionAlert() {
+    alert("Text had cheen changed!");
+  }
+  function myFunctionModalAlert() {
+    var varArgIn = "";
+    var retval = window.showModalDialog("https://www.google.com", varArgIn, "dialogWidth:40;dialogHeight:25;status=no;toolbar=no;menubar=no;resizable=yes");
+    alert("Text had cheen changed!");
+  }
+</script>
+<h2>Clicking onfocus elements that trigger showModalDialog causes other desktop applications to be brought to foreground </h2>
+<input type="text" onfocus="openPopup()" value="GiveMeFocus" /><br>
+
+<h2>onBlur with alert only:</h2><input type="text" onblur="myFunctionAlert()">
+<BR>
+<h2>onBlur with Showmodal+alert:</h2><input type="text" onblur="myFunctionModalAlert()">
+<BR>
+<p>Write something in the input field, and then click outside the field to lose focus (blur).</p>
+
+</body>
+</html>
