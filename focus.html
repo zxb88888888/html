@@ -4,9 +4,12 @@
 </head>
 <body>
 <script>
- function openPopup() {
+ function showModal() {
      window.showModalDialog("focus.html")
  }
+ function openPopup() {
+    window.open("focus.html", "popop")
+ }	
  function myFunctionAlert() {
     alert("Text had cheen changed!");
  }
@@ -19,7 +22,7 @@
 </script>
 <input type="text" id="init" value="" /><br>	
 <h2>Clicking onfocus elements that trigger showModalDialog causes other desktop applications to be brought to foreground </h2>
-<input type="text" onfocus="openPopup()" value="GiveMeFocus" /><br>
+<input type="text" onfocus="showModal()" value="GiveMeFocus" /><br>
 
 <h2>onBlur with alert only:</h2><input type="text" onblur="myFunctionAlert()">
 <BR>
@@ -27,5 +30,6 @@
 <BR>
 <p>Write something in the input field, and then click outside the field to lose focus (blur).</p>
 <input type="text" id="myinput" value="" /><br>	
+<button onclick="showModal()">window.open this again</button>	
 </body>
 </html>
