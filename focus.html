@@ -21,17 +21,17 @@
   myinput.focus()
 </script>
 <br>	
-<h2>Clicking onfocus elements that trigger showModalDialog causes other desktop applications to be brought to foreground </h2>
+<h2>1.Clicking onfocus elements that trigger showModalDialog causes other desktop applications to be brought to foreground </h2>
 <input type="text" onfocus="showModal()" value="GiveMeFocus" /><br>
 
-<h2>Clicking onfocus elements that trigger window.open, and open the new popup window,but the focus and foreground window remains here.</h2>
+<h2>2.Clicking onfocus elements that trigger window.open, and open the new popup window,but the focus and foreground window remains here.</h2>
 <input type="text" onfocus="openPopup()" value="GiveMeFocus" /><br>	
 
-<h2>onBlur with alert only:</h2><input type="text" onblur="myFunctionAlert()">
+<h2>3.Write something in the input field, and then click outside the field to lose focus (blur).</h2>
+<h3>3.1 onBlur with alert only:</h2><input type="text" onblur="myFunctionAlert()">
 <BR>
-<h2>onBlur with Showmodal+alert:</h2><input type="text" onblur="myFunctionModalAlert()">
+<h3>3.2 onBlur with Showmodal+alert:</h2><input type="text" onblur="myFunctionModalAlert()">
 <BR>
-<h2>Write something in the input field, and then click outside the field to lose focus (blur).</h2>
 <input type="text" id="myinput" value="" /><br>	
 </body>
 </html>
