@@ -24,6 +24,9 @@
 <h2>Clicking onfocus elements that trigger showModalDialog causes other desktop applications to be brought to foreground </h2>
 <input type="text" onfocus="showModal()" value="GiveMeFocus" /><br>
 
+<h2>Clicking onfocus elements that trigger window.open causes cuurent page to be brought to foreground </h2>
+<input type="text" onfocus="openPopup()" value="GiveMeFocus" /><br>	
+
 <h2>onBlur with alert only:</h2><input type="text" onblur="myFunctionAlert()">
 <BR>
 <h2>onBlur with Showmodal+alert:</h2><input type="text" onblur="myFunctionModalAlert()">
