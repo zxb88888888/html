@@ -20,11 +20,11 @@
   }
   myinput.focus()
 </script>
-<input type="text" id="init" value="" /><br>	
+<br>	
 <h2>Clicking onfocus elements that trigger showModalDialog causes other desktop applications to be brought to foreground </h2>
 <input type="text" onfocus="showModal()" value="GiveMeFocus" /><br>
 
-<h2>Clicking onfocus elements that trigger window.open causes cuurent page to be brought to foreground </h2>
+<h2>Clicking onfocus elements that trigger window.open, and open the new popup window,but the focus and foreground window remains here.</h2>
 <input type="text" onfocus="openPopup()" value="GiveMeFocus" /><br>	
 
 <h2>onBlur with alert only:</h2><input type="text" onblur="myFunctionAlert()">
