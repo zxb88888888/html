@@ -5,7 +5,7 @@
 <body>
 <script>
  function showModal() {
-     window.showModalDialog("input.html")
+     window.showModalDialog("blank.html")	 
  }
  function openPopup() {
     window.open("blank.html", "location=no","menubar=no,location=no,resizable=no,scrollbars=no,status=yes,width=600,height=500")
@@ -18,9 +18,10 @@
     var retval = window.showModalDialog("blank.html", varArgIn, "dialogWidth:40;dialogHeight:25;status=no;toolbar=no;menubar=no;resizable=yes");
     alert("Text had cheen changed!");
   }
-  myinput.focus()
+  test.focus()	
 </script>
-<br>	
+<br>
+<h1 id="test"><h1>
 <h2>1.Clicking onfocus elements that trigger showModalDialog causes other desktop applications to be brought to foreground </h2>
 <input type="text" onfocus="showModal()" value="GiveMeFocus" /><br>
 
@@ -32,6 +33,5 @@
 <BR>
 <h3>3.2 onBlur with Showmodal+alert:</h2><input type="text" onblur="myFunctionModalAlert()">
 <BR>
-<input type="text" id="myinput" value="" /><br>	
 </body>
 </html>
