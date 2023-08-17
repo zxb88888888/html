@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <title>Test IE Dialogs</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Verdana, sans-serif
+    }
+    button  {
+      margin:4pt;
+      padding:4pt;
+    }
+    input {
+      margin:4pt;
+      padding:4pt;
+    }
+    select {
+      margin:4pt;
+      padding:4pt;
+    }
+    textArea {
+      display:block;
+      margin:4pt;
+    }
+    #debugLog {
+      vertical-align:top;
+      width:90%;
+      height:300px;
+      overflow-y:scroll;
+      font-size:small;
+      border:1px solid black;
+    }
+    #andIETestControl {
+      margin-top:0px;
+      width:500px;
+      height:50px;
+    }
+    #result {
+      vertical-align:top;
+      width:600px;
+      height:16pt;
+      font-weight:bold;
+    }
+    #manualTest {
+      width:300px;
+    }
+  </style>
+</head>
+<body onload="onLoad();">
+  <object id="andIETestControl" classid="CLSID:fe8b02fa-bdc7-4bab-a036-85badf935090"></object>
+  <div id="debugLog"></div>
+  <div id="runResult"></div>
+
+  <script>
+    // Polyfills
+    if (!String.prototype.startsWith) {
+      String.prototype.startsWith = function (searchString, position) {
+        position = position || 0;
+        return this.substr(position, searchString.length) === searchString;
+      };
+    }
+  </script>
+
+  <script>
+    // List of scenarios and expected results within Edge. The goal is compatibility with IE,
+    // which generally means the same bugs as IE.
+    //
+    // The behavior of these tests can also change depending on whether the tab is running in
+    // protected mode. The AX control is also bound by the UIPI restrictions, so it can't walk up
+    // to IEFrame or Chrome_WidgetWin.
+    //
+    // testType options: TridentParent, FrameParent, RootParent, DesktopParent
+    // testThread options: UIThread, WorkerThread, AssociatedWorkerThread
+    var testScenarios = {
+           // Modeless dialogs from worker threads in the content process parented across IL
+      // boundaries also aren't supported in IE.
+      "CreateModelessWindowFrameParent": {
+        "testFunction": showModelessDialog,
+        "testType": ["FrameParent"],
+        "testThread": ["CreateWindowThread"],
+        "expectedStatus": "shown",
+        "expectedModal": false,
+        "expectedOwnedByBrowser": false,
+        "skipInProtectedMode": false,
+      },
+       "CreateModelessWindowRootParent": {
+        "testFunction": showModelessDialog,
+        "testType": ["RootParent"],
+        "testThread": ["CreateWindowThread"],
+        "expectedStatus": "shown",
+        "expectedModal": false,
+        "expectedOwnedByBrowser": false,
+        "skipInProtectedMode": false,
+      },
+      "CreateModelessWindowFrameParentA": {
+        "testFunction": showModelessDialog,
+        "testType": ["FrameParent"],
+        "testThread": ["CreateWindowThreadA"],
+        "expectedStatus": "shown",
+        "expectedModal": false,
+        "expectedOwnedByBrowser": false,
+        "skipInProtectedMode": false,
+      },
+      "CreateModelessWindowRootParentA": {
+        "testFunction": showModelessDialog,
+        "testType": ["RootParent"],
+        "testThread": ["CreateWindowThreadA"],
+        "expectedStatus": "shown",
+        "expectedModal": false,
+        "expectedOwnedByBrowser": false,
+        "skipInProtectedMode": false,
+      },
+    };
+
+    function showOnLoad() {
+      debugLog("ShowModelessDialog(DesktopParent, UIThread, false)");
+      var result = andIETestControl.ShowModelessDialog("DesktopParent", "UIThread", true);
+      debugLog("Result: " + result, "color:blue");
+
+      debugLog("showModelessDialog(DesktopParent, UIThread, false)");
+      var result = andIETestControl.ShowModelessDialog("DesktopParent", "UIThread", false);
+      debugLog("showOnLoad result: " + result, "color:blue");
+    }
+
+    function showMessageBox(testType, testThread, autoDismiss) {
+      debugLog("showMessageBox(" + testType + ", " + testThread + ", " + autoDismiss + ")");
+      var result = andIETestControl.ShowMessageBox(testType, testThread, autoDismiss);
+      debugLog("Result: " + result, "color:blue");
+      return result;
+    }
+
+    function showModalDialog(testType, testThread, autoDismiss) {
+      debugLog("showModalDialog(" + testType + ", " + testThread + ", " + autoDismiss + ")");
+      var result = andIETestControl.ShowModalDialog(testType, testThread, autoDismiss);
+      debugLog("Result: " + result, "color:blue");
+      return result;
+    }
+
+    function showModelessDialog(testType, testThread, autoDismiss) {
+      debugLog("showModelessDialog(" + testType + ", " + testThread + ", " + autoDismiss + ")");
+      var result = andIETestControl.ShowModelessDialog(testType, testThread, autoDismiss);
+      debugLog("Result: " + result, "color:blue");
+      return result;
+    }
+
+    function debugLog(text, style) {
+      console.log(text);
+      var debugLog = document.getElementById("debugLog");
+      debugLog.innerHTML += "<span style='" + style + "'>" + text + "</span></br>";
+      debugLog.scrollTop = debugLog.scrollHeight;
+    }
+
+    function debugLogFailure(result, text) {
+      debugLog("Failed: " + text + ", window=" + result.windowTitle, "color:red");
+    }
+
+    function evaluateResult(test, result) {
+      if (result.status != test.expectedStatus) {
+        debugLogFailure(result, "Dialog not shown");
+        return false;
+      }
+
+      if (test.expectedOwnedByBrowser) {
+        var expectedLogicalRoot = andIETestControl.IsHostedInEdge() ? "Chrome_WidgetWin" : "IEFrame";
+        if (!result.logicalRoot.startsWith(expectedLogicalRoot)) {
+          debugLogFailure(result, "Dialog not parented correctly");
+          return false;
+        }
+      }
+
+      if (test.expectedModal && result.windowEnabled) {
+        debugLogFailure(result, "Dialog not modal");
+        return false;
+      }
+
+      if (!test.expectedModal && !result.windowEnabled) {
+        debugLogFailure(result, "Window disabled for modeless dialog");
+        return false;
+      }
+
+      if (test.expectedModal && andIETestControl.IsProtectedModeProcess() && !result.usingAlternateOwner) {
+        debugLogFailure(result, "Not using alternate owner window");
+        return false;
+      }
+
+      return true;
+    }
+
+    function shouldSkipTestScenario(testScenario) {
+      if (andIETestControl.IsProtectedModeProcess()) {
+        return testScenario.skipInProtectedMode;
+      }
+      return false;
+    }
+
+    function runTestScenario(testScenarioName, closeDialog) {
+      debugLog("Scenario: " + testScenarioName, "font-weight:bold");
+      var testScenario = testScenarios[testScenarioName];
+      var failures = 0;
+      if (!shouldSkipTestScenario(testScenario)) {
+        for (var i = 0; i < testScenario.testType.length; i++) {
+          for (var j = 0; j < testScenario.testThread.length; j++) {
+            var resultJSON = testScenario.testFunction(testScenario.testType[i], testScenario.testThread[j], closeDialog);
+            if (!evaluateResult(testScenario, JSON.parse(resultJSON))) {
+              failures++;
+            }
+          }
+        }
+      } else {
+        debugLog("Skipping for protected mode", "color:brown");
+      }
+
+      return failures;
+    }
+
+    function setRunResult(failureCount) {
+      var runResult = document.getElementById("runResult")
+      if (failureCount == -1) {
+        runResult.innerText = "";
+      } else {
+        runResult.innerText = (failureCount == 0) ?  "Pass" : "Failures: " + failureCount;
+      }
+    }
+
+    function clearDebugLog() {
+      document.getElementById("debugLog").innerHTML = "";
+    }
+
+    function shittyModalLoop() {
+      andIETestControl.PaintPriorityHang();
+    }
+
+    function runAllTests() {
+      setRunResult(-1);
+      var failures = 0;
+      try {
+        for (var testScenario in testScenarios) {
+          failures += runTestScenario(testScenario, true);
+        }
+      } catch (e) {
+        debugLog(e, "color:darkred");
+        failures++;
+      }
+      setRunResult(failures);
+    }
+
+    function runManualTest() {
+      setRunResult(-1);
+
+      var failures = runTestScenario(document.getElementById("manualScenarios").value, false);
+      setRunResult(failures);
+    }
+
+    function onLoad() {
+      var manualScenarios = document.getElementById("manualScenarios");
+      for (var testScenario in testScenarios) {
+        var option = document.createElement("option");
+        option.innerText = testScenario;
+        option.value = testScenario;
+        manualScenarios.appendChild(option);
+      }
+
+      var browserState = document.getElementById("browserState");
+      browserState.innerHTML += "Browser: ";
+      browserState.innerHTML += andIETestControl.IsHostedInEdge() ? "Edge" : "IE";
+      browserState.innerHTML += "<br>";
+      browserState.innerHTML += "Protected Mode: ";
+      browserState.innerHTML += andIETestControl.IsProtectedModeProcess() ? "Yes" : "No";
+
+      //showOnLoad()
+    }
+
+    function onDomContentLoaded() {
+      var args = location.search.substr(1).split("&")
+      .map(function (p) { return p.split("=").map(decodeURIComponent); })
+      .reduce(function (a, e) {
+        a[e[0]] = e[1];
+        return a;
+      }, {});
+
+      if (!args["testScenario"]) {
+        return;
+      }
+
+      if (args["testScenario"] == "all") {
+        runAllTests();
+      } else {
+        setRunResult(runTestScenario(args["testScenario"], true));
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", onDomContentLoaded);
+  </script>
+
+  <h3>Debugging</h3>
+  <button onclick="runManualTest();">Run scenario</button><select id="manualScenarios"></select><br>
+  <button onclick="alert('alert dialog');">alert</button><br>
+  <hr/>
+  <div id="browserState"></div>
+</body>
+
+</html>
