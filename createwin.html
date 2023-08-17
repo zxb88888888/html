@@ -290,14 +290,22 @@
       }
     }
 
+     function onDelayFocus() {
+       setTimeout("window.focus()",5000);
+     }
+    
+     function onDelayAlert() {
+       setTimeout("alert('alert dialog')",5000);
+     }
+
     document.addEventListener("DOMContentLoaded", onDomContentLoaded);
   </script>
 
   <h3>Debugging</h3>
   <button onclick="runManualTest();">Run scenario</button><select id="manualScenarios"></select><br>
   <button onclick="alert('alert dialog');">alert</button><br>
-  <button onclick="setTimeout('browserState.focus()',5000)">deleay to focus</button><br>
-  <button onclick="setTimeout('alert('alert dialog')',5000)">deleay to alert</button><br>
+  <button onclick="onDelayFocus()">delay to focus</button><br>
+  <button onclick="onDelayAlert()">delay to alert</button><br>
   <hr/>
   <div id="browserState"></div>
 </body>
