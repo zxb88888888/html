@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>Work Spaces</title>
+</head>
+<body>
+  <div id="checkblocked">
+    <p>Please allow blocked content!</p>
+</div>  
+<p></p>
+<button type="button" onclick="join1()">click here to workspace "Car" </button>
+<p></p>
+<button type="button" onclick="join2()">click here to workspace "Dual Engine" </button>
+
+<script>
+ checkblocked.style.display = "none"  
+ function join1(){
+  let url = "edge-workspace-join://aka.ms/edgeworkspaces/join?type=2&id=aHR0cHM6Ly9taWNyb3NvZnRhcGMtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwveWFuZ3FpX21pY3Jvc29mdF9jb20vRVR3OXVGLTRlRVZEdm5zSGN2R3NKM2NCNV9JR05PNTd4Q1pEcDNDTUQyVXYxdw%3D%3D&store=3"
+  navigator.clipboard.writeText(url);
+ }
+ function join2(){
+  let url = "edge-workspace-join://aka.ms/edgeworkspaces/join?type=2&id=aHR0cHM6Ly9taWNyb3NvZnRhcGMtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvYWxleHl1YW5fbWljcm9zb2Z0X2NvbS9FWmlXLTBiRzBaQk9tbG1GOE1MdHo5c0JMNGhuRG5nRzY3N1VwQ0VCQXBFMW1B&store=3"
+  navigator.clipboard.writeText(url);
+ }
+ function clickhere() {
+    window.open("https://www.bing.com", "popop 3")
+    setTimeout("showmodal()",3000)
+ }
+ function clickhere2() {
+    setTimeout("showmodal()",5000)
+ }
+ function clickhere3() {
+    setTimeout("alert('test')",5000)
+ }
+ function clickhere4() {
+    setTimeout("window.focus()",5000)
+ }
+ function clickhere5() {
+   setTimeout("showmodal2()",6000);
+}
+
+var location_no = "menubar=no,location=no,resizable=no,scrollbars=no,status=yes,width=600,height=500";
+var location_yes = "menubar=no,location=yes,resizable=no,scrollbars=no,status=yes,width=600,height=500";
+var location_default = "menubar=no,resizable=no,scrollbars=no,status=yes,width=600,height=500";
+	
+function pop_location_no(){
+    window.open("https://www.so.com", "location_no", location_no);	
+}
+function pop_location_yes(){
+    window.open("https://www.so.com", "location_yes", location_yes);	
+}
+function pop_location_default(){
+    window.open("https://www.so.com", "location_default", location_yes);	
+}
+	//window.close();
+</script>
+	
+</body>
+</html>
+
