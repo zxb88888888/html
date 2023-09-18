@@ -1,28 +1,29 @@
 <html>
 
 <body>
-<p> parent:diabled </p>
+<p></p>       
+<p> parent:disabled image:enabled</p>
 <div id="parent_1" disabled>
-<img id="hello_1"  onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+<img id="hello_1"  onclick="onimgclick('hello1')" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
 </div>
-<p> no </p>
+<p> parent:enabled image:enabled </p>
 <div id="parent_2">
-<img id="hello_2"  onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+<img id="hello_2"  onclick="onimgclick('hello2')" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
 </div> 
-<p> img:disabled </p>
+<p> parent:enabled image:disabled </p>
 <div id="parent_3">
-<img id="hello_3" disabled onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+<img id="hello_3" disabled onclick="onimgclick('hello3')" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
 </div>   
-<p> all:disabled </p>
+<p> parent:disabled image:disabled </p>
 <div id="parent_4" disabled>
-<img id="hello_4" disabled onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+<img id="hello_4" disabled onclick="onimgclick('hello4')" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
 </div>  
 </body>
 
 
 <script>
-function onimgclick(){
-    	alert("Hello~");
+function onimgclick(showTxt){
+   alert(showTxt);
 }
 </script>
 
