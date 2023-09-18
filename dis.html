@@ -1,0 +1,30 @@
+<html>
+
+<body>
+<p> parent:diabled </p>
+<div id="parent_1" disabled>
+<img id="hello_1"  onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+</div>
+<p> no </p>
+<div id="parent_2">
+<img id="hello_2"  onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+</div> 
+<p> img:disabled </p>
+<div id="parent_2">
+<img id="hello_2" disabled onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+</div>   
+<p> all:disabled </p>
+<div id="parent_2" disabled>
+<img id="hello_2" disabled onclick="onimgclick()" src="https://bianchuan.azurewebsites.net/favicon.ico"/>
+</div>  
+</body>
+
+
+<script>
+function onimgclick(){
+    	alert("Hello~");
+}
+</script>
+
+
+</html>
