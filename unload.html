@@ -11,6 +11,8 @@
 <p></p>
 <button type="button" onclick="clickhere2()">click here to test modal dialog! wait 5 seconds</button>
 <p></p>
+<button type="button" onclick="closeMe()">Close me</button>
+<p></p>
 <!-- <button type="button" onclick="clickhere3()">click here to test alert! wait 5 seconds</button>
 <p></p>
 <button type="button" onclick="clickhere4()">click here to test focus! wait 5 seconds</button>
@@ -34,8 +36,8 @@
   alert("unload is work");
   }
  }
- function clickhere3() {
-    setTimeout("alert('test')",5000)
+ function closeMe() {
+    window.close()
  }
  function clickhere4() {
     setTimeout("window.focus()",5000)
