@@ -7,12 +7,16 @@
     <p>Please allow blocked content!</p>
 </div>
 <p></p>
-<button type="button" onclick="clickhere()">onbeforeunload</button>
+<button type="button" onclick="toggle()">onbeforeunload Toggle</button>
 <p></p>
 <button type="button" onclick="clickhere2()">click here to test modal dialog! wait 5 seconds</button>
 <p></p>
 <button type="button" onclick="closeMe()">Close me</button>
 <p></p>
+<button type="button" onclick="navIE()">Navigate to IE page</button>
+<p></p>
+<button type="button" onclick="navEdge()">Navigate to Edge page</button>
+<p></p>	
 <!-- <button type="button" onclick="clickhere3()">click here to test alert! wait 5 seconds</button>
 <p></p>
 <button type="button" onclick="clickhere4()">click here to test focus! wait 5 seconds</button>
@@ -26,16 +30,27 @@
  function showmodal2(){
   window.showModalDialog('modal2.html','width=100,height=150,toolbar=0,menubar=0,location=0,status=1,scrollbars=0,resizable=0,left=0,top=0')
  }
- function clickhere() {
+ function toggle() {
+  if(window.onbeforeunload) {
+     window.onbeforeunload = null;	  
+  } else {
   window.onbeforeunload = function(){
      return "onbeforeunload is work";
    }
+  }
  }
  function clickhere2() {
   window.onunload = function(){
   alert("unload is work");
   }
  }
+ function navIE() {
+    location.href = 'dis.html';
+ }
+ function navEdge() {
+    location.href = 'https://www.bing.com';
+ }	
+	
  function closeMe() {
     window.close()
  }
