@@ -7,7 +7,9 @@
     <p>Please allow blocked content!</p>
 </div>
 <p></p>
-<button type="button" onclick="toggle()">onbeforeunload Toggle</button>
+<button type="button" onclick="addonbeforeunload()">add onbeforeunload</button>
+<p></p>
+<button type="button" onclick="removeonbeforeunload()">remove onbeforeunload</button>
 <p></p>
 <button type="button" onclick="clickhere2()">click here to test modal dialog! wait 5 seconds</button>
 <p></p>
@@ -30,14 +32,15 @@
  function showmodal2(){
   window.showModalDialog('modal2.html','width=100,height=150,toolbar=0,menubar=0,location=0,status=1,scrollbars=0,resizable=0,left=0,top=0')
  }
- function toggle() {
-  if(window.onbeforeunload) {
-     window.onbeforeunload = null;	  
-  } else {
+ function addonbeforeunload() {
   window.onbeforeunload = function(){
      return "onbeforeunload is work";
    }
-  }
+ }
+function removeonbeforeunload() {
+  window.onbeforeunload = function(){
+     return "onbeforeunload is work";
+   }
  }
  function clickhere2() {
   window.onunload = function(){
