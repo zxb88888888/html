@@ -19,6 +19,8 @@
 <p></p>
 <button type="button" onclick="navEdge()">Navigate to Edge page</button>
 <p></p>	
+<button type="button" onclick="download()">Download</button>
+<p></p>		
 <!-- <button type="button" onclick="clickhere3()">click here to test alert! wait 5 seconds</button>
 <p></p>
 <button type="button" onclick="clickhere4()">click here to test focus! wait 5 seconds</button>
@@ -37,10 +39,11 @@
      return "onbeforeunload is work";
    }
  }
+ function download() {
+  window.open("https://dl.360safe.com/inst.exe")
+ }
 function removeonbeforeunload() {
-  window.onbeforeunload = function(){
-     return "onbeforeunload is work";
-   }
+  window.onbeforeunload = null;
  }
  function clickhere2() {
   window.onunload = function(){
